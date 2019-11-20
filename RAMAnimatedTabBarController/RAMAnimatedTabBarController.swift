@@ -111,7 +111,17 @@ open class RAMAnimatedTabBarController: UITabBarController {
      */
     @available(*, deprecated, message: "Now you can use UITabBar isHidden")
     open func animationTabBarHidden(_ isHidden: Bool) {
+        
+        guard let items = tabBar.items as? [RAMAnimatedTabBarItem] else {
+            fatalError("items must inherit RAMAnimatedTabBarItem")
+        }
+        
         tabBar.isHidden = isHidden
+        for item in items {
+            if let iconView = item.iconView {
+                iconView.icon.superview?.isHidden = isHidden
+            }
+        }
     }
     
     // MARK: life circle
